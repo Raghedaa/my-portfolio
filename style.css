@@ -703,7 +703,7 @@ font-family: 'Playfair Display', serif;
 }
 
 .web-layout {
-    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 }
 
 .project-card {
@@ -795,7 +795,8 @@ font-family: 'Playfair Display', serif;
 
 .modal-content {
   margin-top: 50px;
-    background: #0a192f; 
+  /* margin: 0px auto; */
+      background: #0a192f; 
     padding: 50px 40px;
     border-radius: 20px;
     width: 80% !important; 
@@ -825,7 +826,8 @@ font-family: 'Playfair Display', serif;
 }
 
 .modal-content[data-project-type="web"] .modal-gallery-grid img {
-    width: 48%;
+    width: 40%;
+
 }
 [data-project-type="mobile"] .modal-gallery-grid {
     display: grid;
@@ -861,11 +863,11 @@ font-family: 'Playfair Display', serif;
 
 @media (max-width: 768px) {
     .modal-content {
-        width: 98% !important; 
-        max-width: 100% !important;
-        padding: 40px 10px 20px 10px !important; 
-        margin-top: 10px !important;
+        margin: 50px 30px !important;
+        width: 95% !important;
+        padding: 30px 10px !important;
     }
+
 
     [data-project-type="web"] .modal-gallery-grid {
         display: flex !important;
