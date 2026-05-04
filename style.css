@@ -20,6 +20,9 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
 }
+html, body {
+  overflow-x: hidden;
+}
 
 nav {
   backdrop-filter: blur(10px);

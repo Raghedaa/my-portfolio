@@ -2,6 +2,14 @@ AOS.init({ duration: 1000, once: true });
 
 const menuIcon = document.getElementById('menuIcon');
 const navLinks = document.getElementById('navLinks');
+const navItems = document.querySelectorAll('#navLinks a');
+
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        navLinks.classList.remove('show');
+        menuIcon.classList.remove('active');
+    });
+});
 
 menuIcon.addEventListener('click', () => {
     navLinks.classList.toggle('show');
