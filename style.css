@@ -864,11 +864,14 @@ font-family: 'Playfair Display', serif;
 @media (max-width: 768px) {
     .modal-content {
         margin: 50px 30px !important;
-        width: 95% !important;
-        padding: 30px 10px !important;
+        width: 90% !important;
+        padding: 60px 10px !important;
     }
 
-
+    .web-layout {
+        grid-template-columns: 1fr;
+    }
+    
     [data-project-type="web"] .modal-gallery-grid {
         display: flex !important;
         flex-direction: column !important;
