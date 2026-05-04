@@ -12,7 +12,9 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
+box-sizing: border-box; 
 }
+
 
 body {
   background-color: var(--bg-color);
@@ -20,19 +22,26 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
 }
+ 
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
 
 nav {
   backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 8%;
+  padding: 20px 5%;
   position: fixed;
   width: 100%;
   top: 0;
+  left:0;
   z-index: 1000;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
+box-sizing: border-box;
 }
 nav ul li a.active::after {
     width: 100%;
@@ -125,6 +134,9 @@ nav ul li a.active::before {
   align-items: center;
   text-align: center;
   padding: 0 10%;
+    padding-top: 120px;
+      box-sizing: border-box;
+
 }
 
 .about-title {
@@ -577,6 +589,9 @@ nav ul li a.active::before {
 /* --- GRIDS --- */
 section {
   padding: 100px 8%;
+  overflow: hidden; /* يمنع أي عنصر متحرك داخل القسم من الخروج عن الحدود */
+    width: 100%;
+    box-sizing: border-box;
 }
 .skill-group-title {
   font-family: "Montserrat", sans-serif;
@@ -693,6 +708,10 @@ font-family: 'Playfair Display', serif;
     max-width: 1000px;
     margin: 0 auto 50px auto;
     justify-content: start;
+      box-sizing: border-box;
+        width: 100%;
+  padding: 0 10px;
+
 }
 
 .mobile-layout {
@@ -857,6 +876,21 @@ font-family: 'Playfair Display', serif;
     transition: transform 0.3s ease;
 }
 
+@media (max-width: 768px) {
+    .hero-about {
+        padding-top: 150px; /* زيادة المسافة حتى لا يختفي النص خلف الناف بار */
+        height: auto; /* يفضل جعل الطول تلقائي في الموبايل ليتناسب مع المحتوى */
+        min-height: 100vh;
+    }
+    
+    .about-title {
+        font-size: 2.2rem; /* تصغير الخط أكثر ليناسب عرض الشاشة */
+    }
+    
+    .sub-title {
+        font-size: 1.6rem;
+    }
+}
 
 @media (max-width: 768px) {
     .modal-content {
