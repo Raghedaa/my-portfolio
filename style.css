@@ -240,7 +240,7 @@ nav ul li a.active::before {
 
 .about-title {
   font-family: "Montserrat", sans-serif;
-  font-size: rem;
+  font-size: 3rem;
   font-weight: 300;
   line-height: 1.2;
   margin-bottom: 15px;
@@ -549,7 +549,7 @@ nav ul li a.active::before {
 
 .about-title {
   font-family: "Montserrat", sans-serif;
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: 300;
   line-height: 1.2;
   margin-bottom: 15px;
