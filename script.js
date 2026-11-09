@@ -196,9 +196,131 @@ function updateModalImg(src, thumb) {
 
 function closeProjectModal() {
     const modal = document.getElementById('projectModal');
-    modal.classList.remove('active');
-    setTimeout(() => modal.style.display = 'none', 300);
+    modal.style.display = 'none';
     document.body.style.overflow = 'auto';
 }
 
+// click on the dark area outside the box closes the modal
+document.getElementById('projectModal').addEventListener('click', (e) => {
+    if (e.target.id === 'projectModal') closeProjectModal();
+});
 
+// Esc key closes it too
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeProjectModal();
+});
+
+
+
+
+
+
+
+
+// ===== Featured project rows (paste at the end of script.js) =====
+
+// Development & Quality text, keyed by data-title (trimmed)
+const PROJECT_QUALITY = {
+  "Musafer — Graduation Project":
+    "Engineered concurrency-safe seat booking workflows, WebSocket-based GPS tracking integrated with PostGIS, and QR ticket validation. Tested critical booking scenarios and edge cases to ensure reliable reservations.",
+   "SpendWise — Smart Personal Finance Companion":
+"Built with Clean Architecture and BLoC/Cubit, integrating Firebase Authentication and Cloud Firestore through REST APIs using Dio. Implemented session persistence and secure cloud data synchronization.",  "Banking System":
+    "Applied Facade, Strategy, Observer, and Chain of Responsibility design patterns to organize core banking operations. Tested failure scenarios across transaction processing and account states to improve system reliability.",
+  "Complaint Management":
+    "Implemented OTP-based authentication, real-time complaint status synchronization, and Firebase Cloud Messaging (FCM) notifications. Verified key user flows to ensure reliable complaint handling.",
+  "Rental Marketplace":
+    "Performed integration testing on API endpoints and role-based permissions across tenant, landlord, and admin workflows. Validated data handling and access control across the platform.",
+  "Event Platform":
+    "Implemented multilingual support and Dark/Light themes, and tested the main UI components and functional workflows to ensure a consistent user experience.",
+  "Banking System Dashboard":
+  "Designed responsive admin views for real-time transaction monitoring and financial analytics, with data visualization for clear insights.",
+  "Real Estate Management Dashboard":
+    "Built a responsive multi-user dashboard with property listings, customer tracking, analytics, and reporting tools."
+};
+// Replaces the old buildFeaturedProjects() and its DOMContentLoaded line.
+// Keep the PROJECT_QUALITY object above it as it is.
+
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("is-visible");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+
+function buildFeaturedProjects() {
+document.querySelectorAll(".project-card").forEach((card, i) => {
+        try {
+      const isWeb = card.classList.contains("web-card");
+      const title = (card.dataset.title || "").trim();
+      const name = title.split("—")[0].trim();
+      const words = name.split(/\s+/).filter(Boolean);
+      const initials = (words.length > 1
+        ? words[0][0] + words[1][0]
+        : name.slice(0, 2)).toUpperCase();
+      const desc = card.dataset.description || "";
+      const quality = card.dataset.quality || PROJECT_QUALITY[title] || "";
+      const images = (card.dataset.images || "")
+        .split(",").map((s) => s.trim()).filter(Boolean);
+      const tags = (card.dataset.keyTags || card.dataset.tags || "")
+        .split(",").map((s) => s.trim()).filter(Boolean).slice(0, 10);
+
+      const shown = images.slice(0, 3);
+      const rest = images.length - 3;
+
+      const shots = shown.map((src) =>
+        `<div class="fp-shot"><img src="${src}" alt="${name} screenshot"></div>`
+      ).join("");
+
+      const moreSlot = rest > 0 ? `
+        <div class="fp-shot more">
+          <img src="${images[3]}" alt="">
+          <button class="fp-more" type="button">
+            <strong>+${rest}</strong><span>View more</span>
+          </button>
+        </div>` : "";
+
+      // AOS measured these cards before they grew, so drop it for them
+      card.removeAttribute("data-aos");
+      card.removeAttribute("data-aos-delay");
+      card.classList.remove("aos-init", "aos-animate", "mobile-card");
+      card.classList.add("fp-reveal");
+      revealObserver.observe(card);
+
+      card.classList.add("featured-project");
+      card.removeAttribute("onclick");
+
+      card.innerHTML = `
+${i < 2 ? `<div class="fp-badge"><i class="fas fa-star"></i> Featured Project</div>` : ""}        <div class="fp-head">
+          <div class="fp-logo">${initials}</div>
+          <h3 class="fp-title">${name}</h3>
+        </div>
+        <p class="fp-desc">${desc}</p>
+        ${quality ? `
+        <div class="fp-quality">
+<h4>Technical Highlights</h4>
+
+          <p>${quality}</p>
+        </div>` : ""}
+        <div class="fp-gallery ${isWeb ? "is-web" : "is-mobile"}">
+          ${shots}${moreSlot}
+        </div>
+        <div class="fp-tags">${tags.map((t) => `<span>${t}</span>`).join("")}</div>
+        <button class="fp-link" type="button">View project ↗</button>
+      `;
+
+      card.querySelectorAll(".fp-shot, .fp-link").forEach((el) =>
+        el.addEventListener("click", () => openProjectModal(card))
+      );
+    } catch (err) {
+      console.error("Project card failed:", card.dataset.title, err);
+    }
+  });
+
+  if (window.AOS) AOS.refreshHard();
+}
+
+document.addEventListener("DOMContentLoaded", buildFeaturedProjects);
